@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import { getAllPosts } from '../../utils/api';
+import { getAllPosts, getCategories } from '../../utils/api';
 
 import logo from '../../logo.svg';
+
+import PostList from '../Post/PostList';
 
 export default class Home extends Component {
 
 	state = {
-		posts: []
+		posts: [],
+		categories: []
 	}
 
 	componentDidMount() {
@@ -17,10 +21,18 @@ export default class Home extends Component {
 					posts: posts
 				});
 			});
-	}
+
+		getCategories()
+			.then((categories) => {
+				this.setState({
+					categories: categories
+				});
+			});
+		}
 
 	render() {
-		const { posts } = this.state;
+		const { posts, categories } = this.state;
+
 		return (
 			<div className="App">
 				<header className="App-header">
@@ -28,8 +40,16 @@ export default class Home extends Component {
 				<h1 className="App-title">Welcome to React</h1>
 				</header>
 				<ul>
-				{ posts.map( (post ) => <li key={post.id} >{post.title}</li>) }
+					{ categories.map( ( category, key ) => {
+						return (
+							<li key={key} >
+								<Link to={`category/${category.name}`} >{category.name}</Link>
+							</li>
+						);
+					})}
 				</ul>
+
+				<PostList posts={posts} />
 			</div>
 		);
 	}
