@@ -1,33 +1,127 @@
 const HEADERS = {'Authorization': 'whaterver'};
 const SERVER_URL = 'http://localhost:3020'
 
+/**
+ * Get all of the categories available for the app. List is found in categories.js.
+ */
 export function getCategories() {
   return fetch( `${SERVER_URL}/categories`, {headers: HEADERS} )
 	.then( (res) => res.json() )
 	.then(( response ) => response.categories )
 }
 
+/**
+ * Get all of the posts. Useful for the main page when no category is selected.
+ */
 export function getAllPosts() {
 	return fetch( `${SERVER_URL}/posts`, {headers: HEADERS} )
 	  .then( (res) => res.json() )
 	  .then( ( posts ) => posts )
 }
 
+/**
+ * Get all of the posts for a particular category
+ * @param {string} category
+ */
 export function getCategoryPosts(category) {
 	return fetch( `${SERVER_URL}/${category}/posts`, {headers: HEADERS} )
 	  .then( (res) => res.json() )
 	  .then( ( posts ) => posts )
 }
 
+/**
+ * Get the details of a single post
+ * @param {string} postId
+ */
 export function getPost(postId) {
 	return fetch( `${SERVER_URL}/posts/${postId}`, {headers: HEADERS} )
 	  .then( (res) => res.json() )
 	  .then( ( post ) => post )
 }
 
+/**
+ * Get all the comments for a single post.
+ * @param {string} postId
+ */
 export function getPostComments(postId) {
 	return fetch( `${SERVER_URL}/posts/${postId}/comments`, {headers: HEADERS} )
 	  .then( (res) => res.json() )
 	  .then( ( comments ) => comments )
+}
+
+/**
+ * Create a new post
+ * @param {object} data All the info for the new post
+ */
+export function createPost(data) {
+	return fetch( `${SERVER_URL}/posts/`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'POST',
+			body: JSON.stringify({
+				...data,
+				timestamp: Date.now(),
+			})
+		})
+	  .then( (res) => res )
+}
+
+/**
+ * Edit a existing post
+ * @param {object} data All the info for the new post
+ */
+export function updatePost(postId, data) {
+	return fetch( `${SERVER_URL}/posts/${postId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'PUT',
+			body: JSON.stringify({
+				...data,
+				timestamp: Date.now(),
+			})
+		})
+	  .then( (res) => res )
+}
+
+/**
+ * Used for voting up on a post
+ * @param {string} postId The post's ID
+ */
+export function upVote( postId ) {
+	return fetch( `${SERVER_URL}/posts/${postId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'POST',
+			body: JSON.stringify({
+				option: 'upVote'
+			})
+		})
+	  .then( ( res ) => res.json() )
+	  .then( ( {voteScore} ) => voteScore )
+}
+
+/**
+ * Used for voting down on a post
+ * @param {string} postId The post's ID
+ */
+export function downVote( postId ) {
+	return fetch( `${SERVER_URL}/posts/${postId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'POST',
+			body: JSON.stringify({
+				option: 'downVote'
+			})
+		})
+	  .then( ( res ) => res.json() )
+	  .then( ( {voteScore} ) => voteScore )
 }
 

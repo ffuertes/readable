@@ -35,21 +35,25 @@ export default class Home extends Component {
 
 		return (
 			<div className="App">
+
 				<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<h1 className="App-title">Welcome to React</h1>
+					<img src={logo} className="App-logo" alt="logo" />
+					<h1 className="App-title">Welcome to React</h1>
+					<Link to="/add-post">Create new post »</Link>
 				</header>
+
 				<ul>
 					{ categories.map( ( category, key ) => {
 						return (
 							<li key={key} >
-								<Link to={`category/${category.name}`} >{category.name}</Link>
+								<Link to={`/${category.name}`} >{category.name}</Link>
 							</li>
 						);
 					})}
 				</ul>
 
 				<PostList posts={posts} />
+
 			</div>
 		);
 	}
