@@ -48,7 +48,7 @@ export default class PostDetail extends Component {
 				<div>Votes: {voteScore} • <button onClick={ () => this.onVoteUp(id) } >Vote Up</button> | <button onClick={ () => this.onVoteDown(id) }>Vote Down</button></div>
 				<p>{body}</p>
 
-				<Link to={`${category}/${id}/edit`}>Edit</Link>
+				<Link to={`/${category}/${id}/edit`}>Edit</Link>
 
 				{ comments.length > 0 && <CommentsList comments={comments} /> }
 			</div>
