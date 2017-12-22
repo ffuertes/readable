@@ -1,3 +1,5 @@
+import uuid from 'uuid/v1';
+
 const HEADERS = {'Authorization': 'whaterver'};
 const SERVER_URL = 'http://localhost:3020'
 
@@ -37,6 +39,21 @@ export function getPost(postId) {
 	return fetch( `${SERVER_URL}/posts/${postId}`, {headers: HEADERS} )
 	  .then( (res) => res.json() )
 	  .then( ( post ) => post )
+}
+
+/**
+ * Delete a post.
+ * @param {string} postId
+ */
+export function deletePost(postId) {
+	return fetch( `${SERVER_URL}/posts/${postId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'DELETE',
+		})
+	  .then( (res) => res.json() );
 }
 
 /**
@@ -123,5 +140,43 @@ export function downVote( postId ) {
 		})
 	  .then( ( res ) => res.json() )
 	  .then( ( {voteScore} ) => voteScore )
+}
+
+/**
+ * User to create a new comment
+ * @param {string} postId Comment's parent
+ * @param {object} data Comment's details
+ */
+export function createComment( postId, data ) {
+	return fetch( `${SERVER_URL}/comments`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'POST',
+			body: JSON.stringify({
+				...data,
+				parentId: postId,
+				id: uuid(),
+				timestamp: Date.now()
+			})
+		})
+	  .then( ( res ) => res.json() )
+	  .then( ( res ) => res )
+}
+
+/**
+ * Delete a Comment.
+ * @param {string} commentId
+ */
+export function deleteComment(commentId) {
+	return fetch( `${SERVER_URL}/comments/${commentId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'DELETE',
+		})
+	  .then( (res) => res.json() );
 }
 

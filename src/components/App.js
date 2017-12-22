@@ -8,7 +8,7 @@ import Header from './Header';
 import PostDetail from './Post/PostDetail';
 import Category from './Category/Category';
 import CreatePost from './Post/CreatePost';
-import EditPost from './Post/CreatePost';
+import EditPost from './Post/EditPost';
 
 class App extends Component {
   render() {

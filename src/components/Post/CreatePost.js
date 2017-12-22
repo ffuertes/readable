@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import serializeForm from 'form-serialize';
-import { withRouter } from 'react-router-dom';
 import uuid from 'uuid/v1';
 
 import { createPost } from '../../utils/api';
 
-class CreatePost extends Component {
+export default class CreatePost extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
@@ -44,5 +43,3 @@ class CreatePost extends Component {
 		);
 	}
 }
-
-export default withRouter( CreatePost );

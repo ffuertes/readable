@@ -3,19 +3,14 @@ import { Link } from 'react-router-dom';
 
 import moment from 'moment';
 
-import { getPost, getPostComments, upVote, downVote } from '../../utils/api';
+import { getPost, getPostComments, upVote, downVote, deletePost, deleteComment } from '../../utils/api';
 
 import CommentsList from './Comments/CommentsList';
+import CommentForm from './Comments/CommentForm';
 
 export default class PostDetail extends Component {
 
 	state = {
-		id: '',
-		title: '',
-		body: '',
-		author: '',
-		date: '',
-		voteScore: 1,
 		comments: []
 	}
 
@@ -39,18 +34,35 @@ export default class PostDetail extends Component {
 			.then( comments => this.setState({comments}) );
 	}
 
+	addCommentToPost = ( comment ) => {
+		this.setState(({comments}) => ({ comments: [...comments, comment ]}) )
+	}
+
+	onDeletePost = (postId) => {
+		deletePost(postId)
+			.then(this.props.history.push('/'));
+	}
+
+	onDeleteComment = (id) => {
+		deleteComment(id)
+			.then(() => {
+				this.setState( ({comments}) => ({comments: comments.filter((comment)=>comment.id !== id)}))
+			});
+	}
+
 	render() {
-		const { id, title, body, author, date, voteScore, category, comments } = this.state;
+		const { id, title, body, author, timestamp, voteScore, category, comments } = this.state;
 		return (
 			<div>
 				<h2>{title}</h2>
-				<div>Posted on { moment(date).format('MMMM Do YYYY') } by {author} </div>
+				<div>Posted on { moment(timestamp).format('MMMM Do YYYY') } by {author} </div>
 				<div>Votes: {voteScore} • <button onClick={ () => this.onVoteUp(id) } >Vote Up</button> | <button onClick={ () => this.onVoteDown(id) }>Vote Down</button></div>
 				<p>{body}</p>
 
-				<Link to={`/${category}/${id}/edit`}>Edit</Link>
+				<Link to={`/${category}/${id}/edit`}>Edit</Link> | <button onClick={ () => this.onDeletePost(id) }>Delete</button>
 
-				{ comments.length > 0 && <CommentsList comments={comments} /> }
+				<CommentsList deleteComment={this.onDeleteComment} comments={comments} />
+				<CommentForm postId={id} onAddComment={this.addCommentToPost} />
 			</div>
 		);
 	}
