@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.css';
+
+import { fetchPosts } from '../actions';
 
 import Home from './Home/Home';
 import Header from './Header';
@@ -11,6 +14,10 @@ import CreatePost from './Post/CreatePost';
 import EditPost from './Post/EditPost';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchData();
+  }
+
   render() {
     return (
       <Router>
@@ -29,4 +36,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+	return {
+		fetchData: () => dispatch(fetchPosts())
+	}
+}
+
+export default connect(null, mapDispatchToProps)(App);

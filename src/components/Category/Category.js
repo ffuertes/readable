@@ -1,33 +1,15 @@
 import React, { Component } from 'react';
-
-import { getCategoryPosts } from '../../utils/api';
+import { connect } from 'react-redux';
 
 import PostList from '../Post/PostList';
 
-export default class Category extends Component {
-	state = {
-		posts: [],
-		noContent: false
-	}
-
-	componentDidMount() {
-		const { catId } = this.props.match.params;
-		getCategoryPosts( catId )
-			.then( (posts) => {
-				if ( posts.length === 0 ) {
-					this.setState({
-						noContent: true
-					});
-				} else {
-					this.setState({
-						posts: posts
-					});
-				}
-			});
-	}
-
+class Category extends Component {
 	render() {
-		const { posts, noContent } = this.state;
+		const { catId } = this.props.match.params;
+
+		const posts = this.props.posts.filter( post => post.category === catId );
+		const noContent = posts.length === 0;
+
 		return (
 			<div>
 				<PostList posts={posts} noContent={noContent} />
@@ -35,3 +17,9 @@ export default class Category extends Component {
 		);
 	}
 }
+
+function mapStateToProps({posts}) {
+	return { posts: posts.posts }
+}
+
+export default connect(mapStateToProps)(Category);

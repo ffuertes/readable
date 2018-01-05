@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import serializeForm from 'form-serialize';
 import uuid from 'uuid/v1';
 
-import { createPost } from '../../utils/api';
+import { createPost } from '../../actions';
 
-export default class CreatePost extends Component {
+class CreatePost extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
 
 		const values = serializeForm( e.target, {hash: true} );
 
-		createPost( values )
+		this.props.createPost( values )
 			.then( () => this.props.history.push('/') );
 	}
 
@@ -43,3 +45,12 @@ export default class CreatePost extends Component {
 		);
 	}
 }
+
+function mapDispatchToProps(dispatch) {
+	return {
+		createPost: data => dispatch( createPost(data) )
+	}
+}
+
+export default connect(null, mapDispatchToProps)(CreatePost);
+

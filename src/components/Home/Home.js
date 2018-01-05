@@ -1,37 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-import { getAllPosts, getCategories } from '../../utils/api';
+import { connect } from 'react-redux';
 
 import logo from '../../logo.svg';
 
 import PostList from '../Post/PostList';
 
-export default class Home extends Component {
-
-	state = {
-		posts: [],
-		categories: []
-	}
-
-	componentDidMount() {
-		getAllPosts()
-			.then((posts) => {
-				this.setState({
-					posts: posts
-				});
-			});
-
-		getCategories()
-			.then((categories) => {
-				this.setState({
-					categories: categories
-				});
-			});
-		}
+class Home extends Component {
 
 	render() {
-		const { posts, categories } = this.state;
+		const { posts, categories } = this.props;
 
 		return (
 			<div className="App">
@@ -43,10 +21,10 @@ export default class Home extends Component {
 				</header>
 
 				<ul>
-					{ categories.map( ( category, key ) => {
+					{ Object.keys(categories).map( ( category ) => {
 						return (
-							<li key={key} >
-								<Link to={`/${category.name}`} >{category.name}</Link>
+							<li key={category} >
+								<Link to={`/${category}`} >{category}</Link>
 							</li>
 						);
 					})}
@@ -58,3 +36,12 @@ export default class Home extends Component {
 		);
 	}
 }
+
+function mapStateToProps({posts, categories}) {
+	return {
+		posts: posts.postsById,
+		categories
+	}
+}
+
+export default connect(mapStateToProps)(Home);

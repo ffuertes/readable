@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import serializeForm from 'form-serialize';
 
-import { getPost, updatePost } from '../../utils/api';
+import { updatePost } from '../../actions';
 
-export default class EditPost extends Component {
+class EditPost extends Component {
 
 	state = {
 		title: '',
@@ -18,9 +19,10 @@ export default class EditPost extends Component {
 	}
 
 	componentDidMount() {
-		//console.log(this.props.match.params.postId);
-		getPost( this.props.match.params.postId )
-			.then( (post) => this.setState({...post}) )
+		const {postId} = this.props.match.params;
+		const post = this.props.postsById[postId] ? this.props.postsById[postId] : {};
+
+		this.setState({...post});
 	}
 
 	onSubmit = (e) => {
@@ -30,7 +32,7 @@ export default class EditPost extends Component {
 
 		const values = serializeForm( e.target, {hash: true} );
 
-		updatePost(id, values )
+		this.props.editPost(id, values)
 			.then( () => this.props.history.push(`/${category}/${id}`) );
 	}
 
@@ -61,3 +63,15 @@ export default class EditPost extends Component {
 		);
 	}
 }
+
+function mapStateToProps({posts}) {
+	return { postsById: posts.postsById }
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		editPost: (id, values) => dispatch(updatePost(id, values))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditPost);
