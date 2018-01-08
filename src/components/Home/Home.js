@@ -9,7 +9,7 @@ import PostList from '../Post/PostList';
 class Home extends Component {
 
 	render() {
-		const { posts, categories } = this.props;
+		const { posts } = this.props;
 
 		return (
 			<div className="App">
@@ -20,16 +20,6 @@ class Home extends Component {
 					<Link to="/add-post">Create new post »</Link>
 				</header>
 
-				<ul>
-					{ Object.keys(categories).map( ( category ) => {
-						return (
-							<li key={category} >
-								<Link to={`/${category}`} >{category}</Link>
-							</li>
-						);
-					})}
-				</ul>
-
 				<PostList posts={posts} />
 
 			</div>
@@ -37,11 +27,8 @@ class Home extends Component {
 	}
 }
 
-function mapStateToProps({posts, categories}) {
-	return {
-		posts: posts.postsById,
-		categories
-	}
+function mapStateToProps({posts}) {
+	return {posts}
 }
 
 export default connect(mapStateToProps)(Home);

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import serializeForm from 'form-serialize';
 
-import { createComment } from '../../../utils/api';
+import { createComment } from '../../../actions';
 
-export default class CommentForm extends Component {
+class CommentForm extends Component {
 	state = {
 		body: ''
 	}
@@ -16,13 +17,10 @@ export default class CommentForm extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const {postId, onAddComment} = this.props;
-
 		const values = serializeForm( e.target, {hash: true} );
 
-		createComment(postId, values)
+		this.props.createComment(values)
 			.then((comment) => {
-				onAddComment(comment);
 				this.setState({body: ''});
 			});
 	}
@@ -39,3 +37,15 @@ export default class CommentForm extends Component {
 		);
 	}
 }
+
+function mapDispatchToProps(dispatch, ownProps) {
+	return {
+		createComment: comment => { 
+			return dispatch(
+				createComment(ownProps.postId, comment)
+			) 
+		}
+	}
+}
+
+export default connect(null, mapDispatchToProps)(CommentForm);

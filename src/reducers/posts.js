@@ -1,124 +1,64 @@
-import sortBy from 'sort-by';
+import { RECEIVE_POSTS, ADD_POST, EDIT_POST, POST_VOTE_DOWN, POST_VOTE_UP, DELETE_POST, ADD_COMMENT, DELETE_COMMENT } from '../actions';
 
-import { combineReducers } from 'redux';
-
-import { RECEIVE_POSTS, ADD_POST, EDIT_POST, POST_VOTE_DOWN, POST_VOTE_UP, DELETE_POST, ORDER_BY } from '../actions';
-
-function posts( state=[], action ) {
-	switch ( action.type ) {
-		case RECEIVE_POSTS:
-			return action.posts;
-		case ADD_POST:
-			return [
-				...state,
-				{
-					...action.post
-				}
-			];
-		case EDIT_POST:
-			return state.map( post => {
-				if ( post.id === action.id) {
-					post.category = action.values.category;
-					post.body = action.values.body;
-					post.title = action.values.title;
-				}
-				return post;
-			})
-		case DELETE_POST:
-			return state.filter( post => post.id !== action.postId );
-		case POST_VOTE_UP:
-			return state.map(post => {
-				if ( post.id === action.postId ) {
-					post.voteScore = post.voteScore + 1
-				}
-				return post;
-			});
-		case POST_VOTE_DOWN:
-			return state.map(post => {
-				if ( post.id === action.postId ) {
-					post.voteScore = post.voteScore - 1
-				}
-				return post;
-			});
-		default:
-			return state;
-	}
+function receivePosts(state, action) {
+	return action.posts.reduce( (byId, post) => {
+		byId[post.id] = post;
+		return byId;
+	}, {})
 }
 
-
-function postsById( state={}, action ) {
-	let newState = {};
-
-	switch ( action.type ) {
-		case RECEIVE_POSTS:
-			return action.posts.reduce( (byId, post) => {
-				byId[post.id] = post;
-				return byId;
-			}, {})
-		case ADD_POST:
-			return {
-				...state,
-				[action.post.id]: {
-					...action.post
-				}
-			};
-		case EDIT_POST:
-			newState = {...state};
-			const {id, values} = action;
-
-			newState[id].category = values.category;
-			newState[id].body = values.body;
-			newState[id].title = values.title;
-
-			return newState;
-		case DELETE_POST:
-			newState = {...state};
-			delete newState[action.postId]
-			return newState;
-		case POST_VOTE_UP:
-			newState = {...state};
-			newState[action.postId].voteScore = newState[action.postId].voteScore;
-			return newState;
-		case POST_VOTE_DOWN:
-			newState = {...state};
-			newState[action.postId].voteScore = newState[action.postId].voteScore;
-			return newState;
-		default:
-			return state;
-	}
+function addPost(state, action) {
+	state[action.post.id] = action.post
+	return state;
 }
 
-function allIds( state=[], action) {
-	let newState = [];
-	switch ( action.type ) {
-		case RECEIVE_POSTS:
-			return action.posts.map( post => {
-				return post.id;
-			})
-		case ORDER_BY:
-			newState = [...state]
-			const {posts, order} = action;
+function editPost(state, action) {
+	const {id, values} = action;
 
+	state[id].category = values.category;
+	state[id].body = values.body;
+	state[id].title = values.title;
 
-			newState.sort( (a, b) => {
-				console.log(posts)
-				if ( posts[a][order] < posts[a][order] )
-					return -1;
-				if ( posts[a][order] > posts[a][order] )
-					return 1;
-				return 0;
-			});
-
-			return action.posts.map( post => {
-				return post.id;
-			})
-		default:
-			return state;
-	}
+	return state;
 }
 
-export default combineReducers({
-	posts,
-	postsById,
-	allIds
-})
+function deletePost(state, action) {
+	delete state[action.postId]
+	return state;
+}
+
+function postVoteUp(state, action) {
+	state[action.postId].voteScore = state[action.postId].voteScore + 1;
+	return state;
+}
+
+function postVoteDown(state, action) {
+	state[action.postId].voteScore = state[action.postId].voteScore - 1;
+	return state;
+}
+
+function AddNewComment(state, action) {
+	const {postId} = action;
+	state[postId].commentCount = state[postId].commentCount + 1;
+	return state;
+}
+
+function deleteComment(state, action) {
+	const {postId} = action;
+	state[postId].commentCount = state[postId].commentCount - 1;
+	return state;
+}
+
+export default function postsById( state={}, action ) {
+	switch ( action.type ) {
+		case RECEIVE_POSTS: return receivePosts(state, action);
+		case ADD_POST: return addPost({...state}, action);
+		case EDIT_POST: return editPost({...state}, action);
+		case DELETE_POST: return deletePost({...state}, action);
+		case POST_VOTE_UP: return postVoteUp({...state}, action);
+		case POST_VOTE_DOWN: return postVoteDown({...state}, action);
+		case ADD_COMMENT: return AddNewComment({...state}, action);
+		case DELETE_COMMENT: return deleteComment({...state}, action);
+		default: return state;
+	}
+}

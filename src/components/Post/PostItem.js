@@ -12,7 +12,7 @@ export default class PostItem extends Component {
 						{post.title}
 					</Link>
 				</h3>
-				<div>Posted { moment(post.timestamp).fromNow() } by {post.author} • {post.voteScore} Votes</div>
+				<div>Posted { moment(post.timestamp).fromNow() } by {post.author} • {post.voteScore} Votes • {post.commentCount} Comments</div>
 			</article>
 		);
 	}

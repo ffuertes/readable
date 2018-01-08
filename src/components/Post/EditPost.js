@@ -11,18 +11,28 @@ class EditPost extends Component {
 		body: '',
 		category: ''
 	}
+	
+	componentWillReceiveProps(props) {
+		this.loadInitialData(props)	
+	}
+	
+	componentWillMount() {
+		this.loadInitialData(this.props)	
+	}
+	
+	loadInitialData(props) {
+		const post = props.post;
+		if ( post !== undefined ) {
+			this.setState({
+				...post
+			});		
+		}
+	}
 
 	onChange = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value
 		})
-	}
-
-	componentDidMount() {
-		const {postId} = this.props.match.params;
-		const post = this.props.postsById[postId] ? this.props.postsById[postId] : {};
-
-		this.setState({...post});
 	}
 
 	onSubmit = (e) => {
@@ -64,8 +74,9 @@ class EditPost extends Component {
 	}
 }
 
-function mapStateToProps({posts}) {
-	return { postsById: posts.postsById }
+function mapStateToProps({posts}, ownProps) {
+	const {postId} = ownProps.match.params;
+	return { post: posts[postId] }
 }
 
 function mapDispatchToProps(dispatch) {

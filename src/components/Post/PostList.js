@@ -1,33 +1,39 @@
 import React, { Component } from 'react';
-import sortBy from 'sort-by';
-import { connect } from 'react-redux';
 
 import PostItem from './PostItem';
 
-import { orderBy } from '../../actions';
-
-class PostList extends Component {
-
+export default class PostList extends Component {
 	state = {
 		order: 'timestamp'
 	}
 
-	onChangeOrder = (event) => {
+	onChangeOrder = event => {
+		const { value } = event.target;
 		this.setState({
-			order: event.target.value
-		})
+			order: value
+		});
 	}
 
 	render() {
-		const { order } = this.state;
-		const { posts, noContent } = this.props;
+		const { order } = this.state; 
+		const { posts } = this.props;
 
-		//const orderedPosts = posts.sort(sortBy(order));
+		const postsIds = Object.keys(posts).sort( (a, b) => {
+			if ( posts[a][order] < posts[b][order] ) {
+				return 1;
+			}
+			if ( posts[b][order] < posts[a][order] ) {
+				return -1;
+			}
+			return 0;
+		});
+
+		const noContent = postsIds.length === 0;
 
 		return (
 			<div>
 				<div>
-					<select name="orderby" id="orderby" onChange={ () => this.props.sortBy(posts, order)}>
+					<select name="orderby" id="orderby" onChange={(e) => this.onChangeOrder(e) }>
 						<option value="timestamp">Date</option>
 						<option value="voteScore">Votes</option>
 					</select>
@@ -36,9 +42,9 @@ class PostList extends Component {
 					<NoContent />
 				) : (
 					<section>
-						{ Object.keys(posts).map( (post ) => {
+						{ postsIds.map( (id) => {
 							return (
-								<PostItem key={post.id} post={posts[post]} />
+								<PostItem key={id} post={posts[id]} />
 							)
 						})}
 					</section>
@@ -47,14 +53,6 @@ class PostList extends Component {
 		);
 	}
 }
-
-function mapDispatchToProps(dispatch) {
-	return {
-		sortBy: (posts, order) => dispatch(orderBy(posts, order))
-	}
-}
-
-export default connect(null, mapDispatchToProps)(PostList)
 
 const NoContent = () => {
 	return (

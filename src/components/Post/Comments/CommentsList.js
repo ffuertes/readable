@@ -1,24 +1,40 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
-import {  } from '../../../utils/api';
+import { removeComment } from '../../../actions';
 
-export default class CommentsList extends Component {
+class CommentsList extends Component {
 	render() {
 		const { comments, deleteComment } = this.props;
-		const noComments = comments.length === 0 ? <NoComments /> : null;
+		const noComments = Object.keys(comments).length === 0 ? <NoComments /> : null;
 		return (
 			<div>
 				<h2>Comments</h2>
 				{noComments}
 				<ul className="comments-list">
-					{ comments.map( (comment) =>
-						<li key={comment.id} >{ comment.body } <button onClick={ () => deleteComment(comment.id) }>Delete</button></li>
+					{ Object.keys(comments).map( (commentId) => {
+						const comment = comments[commentId];
+						return (
+							<li key={comment.id} >{ comment.body } <button onClick={ () => deleteComment(comment.parentId, comment.id) }>Delete</button></li>
+						)}
 					)}
 				</ul>
 			</div>
 		);
 	}
 }
+
+function mapStateToProps({comments}) {
+	return {comments};
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+	return {
+		deleteComment: (postId, commentId) => dispatch(removeComment( postId, commentId))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentsList)
 
 const NoComments = () => {
 	return (

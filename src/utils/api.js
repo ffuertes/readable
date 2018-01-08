@@ -1,7 +1,7 @@
 import uuid from 'uuid/v1';
 
 const HEADERS = {'Authorization': 'whaterver'};
-const SERVER_URL = 'http://localhost:3020'
+const SERVER_URL = 'http://localhost:3001'
 
 /**
  * Get all of the categories available for the app. List is found in categories.js.
