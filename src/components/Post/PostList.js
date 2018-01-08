@@ -15,7 +15,7 @@ export default class PostList extends Component {
 	}
 
 	render() {
-		const { order } = this.state; 
+		const { order } = this.state;
 		const { posts } = this.props;
 
 		const postsIds = Object.keys(posts).sort( (a, b) => {
@@ -36,6 +36,7 @@ export default class PostList extends Component {
 					<select name="orderby" id="orderby" onChange={(e) => this.onChangeOrder(e) }>
 						<option value="timestamp">Date</option>
 						<option value="voteScore">Votes</option>
+						<option value="commentCount">Comments</option>
 					</select>
 				</div>
 				{ noContent ? (
@@ -44,7 +45,7 @@ export default class PostList extends Component {
 					<section>
 						{ postsIds.map( (id) => {
 							return (
-								<PostItem key={id} post={posts[id]} />
+								<PostItem key={id} postId={id} />
 							)
 						})}
 					</section>

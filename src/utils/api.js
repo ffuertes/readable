@@ -1,5 +1,3 @@
-import uuid from 'uuid/v1';
-
 const HEADERS = {'Authorization': 'whaterver'};
 const SERVER_URL = 'http://localhost:3001'
 
@@ -79,7 +77,6 @@ export function createPost(data) {
 			method: 'POST',
 			body: JSON.stringify({
 				...data,
-				timestamp: Date.now(),
 			})
 		})
 	  .then( (res) => res )
@@ -98,7 +95,6 @@ export function updatePost(postId, data) {
 			method: 'PUT',
 			body: JSON.stringify({
 				...data,
-				timestamp: Date.now(),
 			})
 		})
 	  .then( (res) => res )
@@ -156,9 +152,6 @@ export function createComment( postId, data ) {
 			method: 'POST',
 			body: JSON.stringify({
 				...data,
-				parentId: postId,
-				id: uuid(),
-				timestamp: Date.now()
 			})
 		})
 	  .then( ( res ) => res.json() )
@@ -178,5 +171,50 @@ export function deleteComment(commentId) {
 			method: 'DELETE',
 		})
 	  .then( (res) => res.json() );
+}
+
+
+export function commentDownVote( commentId ) {
+	return fetch( `${SERVER_URL}/comments/${commentId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'POST',
+			body: JSON.stringify({
+				option: 'downVote'
+			})
+		})
+	  .then( ( res ) => res.json() )
+	  .then( ( {voteScore} ) => voteScore )
+}
+
+export function commentUpVote( commentId ) {
+	return fetch( `${SERVER_URL}/comments/${commentId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'POST',
+			body: JSON.stringify({
+				option: 'upVote'
+			})
+		})
+	  .then( ( res ) => res.json() )
+	  .then( ( {voteScore} ) => voteScore )
+}
+
+export function updateComment(commentId, data) {
+	return fetch( `${SERVER_URL}/comments/${commentId}`, {
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'whaterver'
+			},
+			method: 'PUT',
+			body: JSON.stringify({
+				...data,
+			})
+		})
+	  .then( (res) => res )
 }
 

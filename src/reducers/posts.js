@@ -27,13 +27,8 @@ function deletePost(state, action) {
 	return state;
 }
 
-function postVoteUp(state, action) {
-	state[action.postId].voteScore = state[action.postId].voteScore + 1;
-	return state;
-}
-
-function postVoteDown(state, action) {
-	state[action.postId].voteScore = state[action.postId].voteScore - 1;
+function postVote(state, action) {
+	state[action.postId].voteScore = action.voteScore;
 	return state;
 }
 
@@ -55,8 +50,8 @@ export default function postsById( state={}, action ) {
 		case ADD_POST: return addPost({...state}, action);
 		case EDIT_POST: return editPost({...state}, action);
 		case DELETE_POST: return deletePost({...state}, action);
-		case POST_VOTE_UP: return postVoteUp({...state}, action);
-		case POST_VOTE_DOWN: return postVoteDown({...state}, action);
+		case POST_VOTE_UP:
+		case POST_VOTE_DOWN: return postVote({...state}, action);
 		case ADD_COMMENT: return AddNewComment({...state}, action);
 		case DELETE_COMMENT: return deleteComment({...state}, action);
 		default: return state;

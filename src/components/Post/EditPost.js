@@ -11,21 +11,21 @@ class EditPost extends Component {
 		body: '',
 		category: ''
 	}
-	
+
 	componentWillReceiveProps(props) {
-		this.loadInitialData(props)	
+		this.loadInitialData(props)
 	}
-	
+
 	componentWillMount() {
-		this.loadInitialData(this.props)	
+		this.loadInitialData(this.props)
 	}
-	
+
 	loadInitialData(props) {
 		const post = props.post;
 		if ( post !== undefined ) {
 			this.setState({
 				...post
-			});		
+			});
 		}
 	}
 
@@ -64,7 +64,12 @@ class EditPost extends Component {
 
 					<div className="form-field">
 						<label htmlFor="category">Category</label>
-						<input type="text" name="category" id="category" onChange={this.onChange} value={category} />
+						<select name="category" id="category" onChange={this.onChange} value={category}>
+							<option value="">-- Select Category --</option>
+							<option value="react">React</option>
+							<option value="redux">Redux</option>
+							<option value="udacity">Udacity</option>
+						</select>
 					</div>
 
 					<input type="submit" value="Update Post" />

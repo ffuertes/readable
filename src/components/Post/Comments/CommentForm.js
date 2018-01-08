@@ -24,6 +24,7 @@ class CommentForm extends Component {
 				this.setState({body: ''});
 			});
 	}
+
 	render() {
 		const {body} = this.state;
 		return (
@@ -40,10 +41,10 @@ class CommentForm extends Component {
 
 function mapDispatchToProps(dispatch, ownProps) {
 	return {
-		createComment: comment => { 
+		createComment: comment => {
 			return dispatch(
 				createComment(ownProps.postId, comment)
-			) 
+			)
 		}
 	}
 }

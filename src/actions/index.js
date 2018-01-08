@@ -1,3 +1,5 @@
+import uuid from 'uuid/v1';
+
 import * as API from '../utils/api';
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
@@ -40,7 +42,11 @@ export const addPost = post => ({
 	post
 });
 	export const createPost = data => dispatch => {
-		return API.createPost(data)
+		const values = {
+			...data,
+			timestamp: Date.now()
+		}
+		return API.createPost(values)
 		.then( (res) => res.json() )
 		.then( (post) => { return dispatch(addPost(post)) } )
 	}
@@ -52,8 +58,12 @@ export const editPost = (id, values) => ({
 	values
 });
 	export const updatePost = (id, values) => dispatch => {
-		return API.updatePost(id, values)
-		.then( () => dispatch(editPost(id, values)) )
+		const data = {
+			...values,
+			timestamp: Date.now()
+		}
+		return API.updatePost(id, data)
+		.then( () => dispatch(editPost(id, data)) )
 	}
 
 
@@ -66,23 +76,25 @@ export const removePost = postId => ({
 		.then( () => dispatch(removePost(id)) )
 	}
 
-export const postVoteUp = postId => ({
+export const postVoteUp = (postId, voteScore) => ({
 	type: POST_VOTE_UP,
-	postId
+	postId,
+	voteScore
 });
 	export const upVote = id => dispatch => {
 		return API.upVote(id)
-		.then( () => dispatch(postVoteUp(id)) )
+		.then( voteScore => dispatch(postVoteUp(id,voteScore)) )
 	}
 
 
-export const postVoteDown = postId => ({
+export const postVoteDown = (postId, voteScore) => ({
 	type: POST_VOTE_DOWN,
-	postId
+	postId,
+	voteScore
 });
 	export const downVote = id => dispatch => {
 		return API.downVote(id)
-		.then( () => dispatch(postVoteDown(id)) )
+		.then( voteScore => dispatch(postVoteDown(id, voteScore)) )
 	}
 
 
@@ -105,14 +117,31 @@ export const addComment = ( postId, comment ) => ({
 	comment
 });
 	export const createComment = ( postId, data ) => dispatch => {
-		return API.createComment( postId, data )
+		const values = {
+			parentId: postId,
+			id: uuid(),
+			timestamp: Date.now(),
+			...data
+		}
+		return API.createComment( postId, values )
 		.then( comment => { return dispatch(addComment(postId, comment)) } )
 	}
 
-export const editComment = comment => ({
+export const editComment = (id, comment) => ({
 	type: EDIT_COMMENT,
+	id,
 	comment
 });
+	export const updateComment = (id, values) => dispatch => {
+		const data = {
+			...values,
+			timestamp: Date.now()
+		}
+		return API.updateComment(id, data)
+		.then( (res) => res.json() )
+		.then( comment => dispatch(editComment(id, comment)) )
+	}
+
 
 export const deleteComment = ( postId, commentId ) => ({
 	type: DELETE_COMMENT,
@@ -124,12 +153,22 @@ export const deleteComment = ( postId, commentId ) => ({
 		.then( () => { return dispatch(deleteComment(postId, commentId)) } )
 	}
 
-export const commentVoteUp = commentId => ({
+export const commentVoteUp = (commentId, voteScore) => ({
 	type: COMMENT_VOTE_UP,
-	commentId
+	commentId,
+	voteScore
 });
+	export const commentUpVote = id => dispatch => {
+		return API.commentUpVote(id)
+		.then( voteScore => dispatch(commentVoteUp(id, voteScore)) )
+	}
 
-export const commentVoteDown = commentId => ({
+export const commentVoteDown = (commentId, voteScore) => ({
 	type: COMMENT_VOTE_DOWN,
-	commentId
+	commentId,
+	voteScore
 });
+	export const commentDownVote = id => dispatch => {
+		return API.commentDownVote(id)
+		.then( (voteScore) => dispatch(commentVoteUp(id, voteScore)) )
+	}

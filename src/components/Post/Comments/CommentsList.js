@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
-import { removeComment } from '../../../actions';
+import CommentItem from './CommentItem';
 
 class CommentsList extends Component {
 	render() {
-		const { comments, deleteComment } = this.props;
+		const { comments } = this.props;
 		const noComments = Object.keys(comments).length === 0 ? <NoComments /> : null;
 		return (
 			<div>
@@ -13,9 +13,8 @@ class CommentsList extends Component {
 				{noComments}
 				<ul className="comments-list">
 					{ Object.keys(comments).map( (commentId) => {
-						const comment = comments[commentId];
 						return (
-							<li key={comment.id} >{ comment.body } <button onClick={ () => deleteComment(comment.parentId, comment.id) }>Delete</button></li>
+							<CommentItem key={commentId} commentId={commentId}/>
 						)}
 					)}
 				</ul>
@@ -27,14 +26,7 @@ class CommentsList extends Component {
 function mapStateToProps({comments}) {
 	return {comments};
 }
-
-function mapDispatchToProps(dispatch, ownProps) {
-	return {
-		deleteComment: (postId, commentId) => dispatch(removeComment( postId, commentId))
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CommentsList)
+export default connect(mapStateToProps)(CommentsList)
 
 const NoComments = () => {
 	return (

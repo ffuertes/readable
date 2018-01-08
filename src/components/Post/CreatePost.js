@@ -36,7 +36,12 @@ class CreatePost extends Component {
 
 					<div className="form-field">
 						<label htmlFor="category">Category</label>
-						<input type="text" name="category" id="category" />
+						<select name="category" id="category">
+							<option value="">-- Select Category --</option>
+							<option value="react">React</option>
+							<option value="redux">Redux</option>
+							<option value="udacity">Udacity</option>
+						</select>
 					</div>
 
 					<input type="submit" value="Create Post" />
