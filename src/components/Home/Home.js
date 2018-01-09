@@ -12,16 +12,9 @@ class Home extends Component {
 		const { posts } = this.props;
 
 		return (
-			<div className="App">
-
-				<header className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
-					<h1 className="App-title">Welcome to React</h1>
-					<Link to="/add-post">Create new post »</Link>
-				</header>
-
+			<div className="l-center">
+				<h1 className="page-title">All Posts</h1>
 				<PostList posts={posts} />
-
 			</div>
 		);
 	}

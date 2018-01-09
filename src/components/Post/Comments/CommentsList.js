@@ -9,7 +9,7 @@ class CommentsList extends Component {
 		const noComments = Object.keys(comments).length === 0 ? <NoComments /> : null;
 		return (
 			<div>
-				<h2>Comments</h2>
+				<h2 className="section-title">Comments</h2>
 				{noComments}
 				<ul className="comments-list">
 					{ Object.keys(comments).map( (commentId) => {
@@ -30,6 +30,6 @@ export default connect(mapStateToProps)(CommentsList)
 
 const NoComments = () => {
 	return (
-		<div>No comments here yet...</div>
+		<div className="no-comments">No comments here yet...</div>
 	)
 }

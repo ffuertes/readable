@@ -1,22 +1,239 @@
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #fafafa;
 }
 
-.App-header {
+.l-center {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 25px;
+  font-size: 1rem;
+  border: 1px solid #09e;
+  color: #09e;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.button.primary {
+  display: inline-block;
+  padding: 7px 15px;
+  background: #09e !important;
+  color: #fff;
+  border-radius: 4px;
+  background: transparent;
+}
+
+label {
+  display: block;
+  margin: 0 0 10px;
+}
+.form-field {
+  margin-top: 35px;
+}
+
+.form-field.submit {
+  text-align: right;
+}
+
+input, textarea {
+  width: 100%;
+}
+input, textarea, select {
+  padding: 15px;
+  border: 1px solid #eaeaea;
+  font-size: 1rem;
+}
+
+.app-header {
   background-color: #222;
-  height: 150px;
-  padding: 20px;
+  padding: 0 20px;
   color: white;
-  text-align: center;
+  display: flex;
+  margin-bottom: 45px;
 }
 
-.App-title {
-  font-size: 1.5em;
+.app-title {
+  font-size: 1.2rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.app-title i {
+  margin-right: 10px;
+}
+
+.app-title small {
+  font-size: 0.8rem;
+  margin-left: 15px;
+  padding: 5px 15px;
+  border-left: 1px solid rgba(255,255,255, 0.2);
+}
+
+.controls {
+  padding: 15px 0;
+  text-align: right;
+  display: flex;
+  align-items: center;
+}
+
+.controls .orderBy {
+  margin-left: auto;
+}
+
+.controls select {
+  padding: 5px;
+  margin-left: 10px;
+}
+.post-item {
+  padding: 25px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  margin-bottom: 25px;
+  display: flex;
+}
+
+.post-item__title {
+  margin: 0;
+  font-weight: normal;
+  font-size: 1.8rem;
+  flex: 1;
+  color: #09e;
+}
+
+.votes {
+  text-align: center;
+  font-size: 1.6rem;
+}
+.votes button {
+  background: transparent;
+  border: 0;
+  font-size: 1.8rem;
+  padding: 0 15px;
+  color: #09e;
+}
+.post-item__content {
+  flex: 1;
+}
+.post-item__meta {
+  font-size: 1rem;
+  color: #777;
+  padding: 10px 0;
+}
+
+.post-body {
+  display: flex;
+  margin-top: 20px;
+}
+.post-content {
+  padding-left: 20px;
+}
+.post-actions {
+  text-align: right;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.app-header ul li a {
+  display: block;
+  padding: 15px 15px;
+  text-transform: capitalize;
+}
+
+.app-header ul li a.active {
+  border-bottom: 4px solid #09e;
 }
 
 .App-intro {
   font-size: large;
+}
+
+.page-title {
+  border-bottom: 1px solid #eaeaea;
+  padding: 10px 0;
+  text-transform: capitalize;
+}
+
+.page-title small {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.comments-area {
+  background: #fff;
+  padding: 10px 0 45px;
+  margin-top: 45px;
+}
+
+.comment-form {
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  padding: 0 25px 25px;
+  margin-top: 45px;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+}
+.comment-item {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.comment-votes {
+  text-align: center;
+  margin-right: 15px;
+}
+
+.comment-item__wrap {
+  display: flex;
+}
+.comment-item__content {
+  flex: 1;
+}
+.comment-meta {
+  font-style: italic;
+}
+.comment-body {
+  margin: 20px 0;
+}
+.comment-footer {
+  text-align: right;
+  border-top: 1px solid #eaeaea;
+  padding-top: 15px;
+}
+
+.no-comments {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+.actions button,
+.actions a {
+  border: 0;
+  background: transparent;
+  font-size: 1.2rem;
+}
+
+.section-title {
+  margin-top: 35px;
 }
 
 @keyframes App-logo-spin {

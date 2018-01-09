@@ -19,10 +19,15 @@ class CreatePost extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="l-center">
+				<h1 className="page-title">Create a New Post</h1>
 				<form onSubmit={this.onSubmit}>
-					<input type="hidden" name="author" defaultValue="Felipe" />
 					<input type="hidden" name="id" defaultValue={ uuid() } />
+
+					<div className="form-field">
+						<label htmlFor="author">Author:</label>
+						<input type="text" name="author" id="author" />
+					</div>
 
 					<div className="form-field">
 						<label htmlFor="title">Title:</label>
@@ -31,7 +36,7 @@ class CreatePost extends Component {
 
 					<div className="form-field">
 						<label htmlFor="body">Body</label>
-						<textarea name="body" id="body"></textarea>
+						<textarea name="body" id="body" rows="15"></textarea>
 					</div>
 
 					<div className="form-field">
@@ -44,7 +49,9 @@ class CreatePost extends Component {
 						</select>
 					</div>
 
-					<input type="submit" value="Create Post" />
+					<div className="form-field submit">
+						<button type="submit" className="button primary">Create Post</button>
+					</div>
 				</form>
 			</div>
 		);

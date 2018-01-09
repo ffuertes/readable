@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 
 import PostItem from './PostItem';
 
@@ -32,12 +33,16 @@ export default class PostList extends Component {
 
 		return (
 			<div>
-				<div>
-					<select name="orderby" id="orderby" onChange={(e) => this.onChangeOrder(e) }>
-						<option value="timestamp">Date</option>
-						<option value="voteScore">Votes</option>
-						<option value="commentCount">Comments</option>
-					</select>
+				<div className="controls">
+					<Link to="/add-post" className="button">Create new post »</Link>
+					<div className="orderBy">
+						<i className="fas fa-sort"></i>
+						<select name="orderby" id="orderby" onChange={(e) => this.onChangeOrder(e) }>
+							<option value="timestamp">Date</option>
+							<option value="voteScore">Votes</option>
+							<option value="commentCount">Comments</option>
+						</select>
+					</div>
 				</div>
 				{ noContent ? (
 					<NoContent />

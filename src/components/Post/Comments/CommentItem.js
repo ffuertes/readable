@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import moment from 'moment';
 
 import { removeComment, commentUpVote, commentDownVote } from '../../../actions';
 
@@ -19,16 +20,23 @@ class CommentItem extends Component {
 		const comment = comments[commentId];
 		const {edit} = this.state;
 		return (
-			<li>
+			<li class="comment-item">
 				{edit && <CommentEdit commentId={comment.id} body={comment.body} onEdit={this.onClickEdit} />}
 
 				{!edit &&
-					<div>
-						{ comment.body } • Votes: {comment.voteScore} | <button onClick={this.onClickEdit}>Edit</button>
-						<footer>
-							<button onClick={ () => commentVoteUp(comment.id) }>Vote Up</button> | <button onClick={ () => commentVoteDown(comment.id) }>Vote Down</button> •
-							<button onClick={ () => deleteComment(comment.parentId, comment.id) }>Delete</button>
-						</footer>
+					<div className="comment-item__wrap">
+						<div className="comment-votes votes">
+							<button onClick={ () => commentVoteUp(comment.id) }><i className="fas fa-angle-up"/></button>
+							<div className="vote-score">{comment.voteScore}</div>
+							<button onClick={ () => commentVoteDown(comment.id) }><i className="fas fa-angle-down"/></button>
+						</div>
+						<div className="comment-item__content">
+							<div className="comment-meta">{ moment(comment.timestamp).fromNow() } <strong>{comment.author}</strong> said:</div>
+							<div className="comment-body">{ comment.body }</div>
+							<footer className="comment-footer actions">
+							<button onClick={this.onClickEdit}><i className="fas fa-edit"></i></button> | <button onClick={ () => deleteComment(comment.parentId, comment.id) }><i className="fas fa-trash-alt"></i></button>
+							</footer>
+						</div>
 					</div>
 				}
 			</li>

@@ -50,7 +50,7 @@ class EditPost extends Component {
 		const { title, body, category } = this.state;
 
 		return (
-			<div>
+			<div className="l-center">
 				<form onSubmit={this.onSubmit}>
 					<div className="form-field">
 						<label htmlFor="title">Title:</label>
@@ -59,7 +59,7 @@ class EditPost extends Component {
 
 					<div className="form-field">
 						<label htmlFor="body">Body</label>
-						<textarea name="body" id="body" onChange={this.onChange} value={body}></textarea>
+						<textarea name="body" id="body" rows="15" onChange={this.onChange} value={body}></textarea>
 					</div>
 
 					<div className="form-field">
@@ -72,7 +72,9 @@ class EditPost extends Component {
 						</select>
 					</div>
 
-					<input type="submit" value="Update Post" />
+					<div className="form-field submit">
+						<button type="submit" class="button primary">Update Post</button>
+					</div>
 				</form>
 			</div>
 		);

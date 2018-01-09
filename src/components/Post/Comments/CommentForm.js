@@ -28,11 +28,20 @@ class CommentForm extends Component {
 	render() {
 		const {body} = this.state;
 		return (
-			<div>
+			<div className="comment-form">
+				<h2>Say Something...</h2>
 				<form onSubmit={this.onSubmit}>
-					<input type="hidden" name="author" value="Felipe" />
-					<textarea name="body" id="body" cols="30" rows="10" value={body} onChange={this.onChange}></textarea>
-					<input type="submit" defaultValue="Comment"/>
+					<div className="form-field">
+						<label htmlFor="author">Your Name</label>
+						<input type="text" name="author" id="author"/>
+					</div>
+					<div className="form-field">
+						<label htmlFor="body">Your Comment</label>
+						<textarea name="body" id="body" cols="30" rows="10" value={body} onChange={this.onChange}></textarea>
+					</div>
+					<div className="form-field submit">
+						<button type="submit" class="button primary">Comment</button>
+					</div>
 				</form>
 			</div>
 		);

@@ -19,7 +19,7 @@ class EditComment extends Component {
 		return (
 			<form onSubmit={ this.onFormSubmit }>
 				<textarea name="body" id="editCommentForm" onChange={this.onChange} cols="30" rows="10" defaultValue={body}></textarea>
-				<button type="submit">Guardar</button>
+				<button type="submit">Save</button>
 			</form>
 		)
 	}

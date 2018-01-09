@@ -23,15 +23,29 @@ class PostDetail extends Component {
 
 		return (
 			<div>
-				<h2>{title}</h2>
-				<div>Posted on { moment(timestamp).format('MMMM Do YYYY') } by {author} </div>
-				<div>Votes: {voteScore} • <button onClick={ () => this.props.onVoteUp(id) } >Vote Up</button> | <button onClick={ () => this.props.onVoteDown(id) }>Vote Down</button></div>
-				<p>{body}</p>
+				<div className="l-center">
+				<h1 class="page-title">{title}</h1>
+					<div>Posted on { moment(timestamp).format('MMMM Do YYYY') } by {author} </div>
 
-				<Link to={`/${category}/${id}/edit`}>Edit</Link> | <button onClick={ () => this.props.onDeletePost(id) }>Delete</button>
+					<div className="post-body">
+						<div className="votes">
+							<button onClick={ () => this.props.onVoteUp(id) } ><i className="fas fa-angle-up"></i></button>
+							<div className="votes">{voteScore}</div>
+							<button onClick={ () => this.props.onVoteDown(id) }><i className="fas fa-angle-down"></i></button>
+						</div>
+						<div className="post-content">{body}</div>
+					</div>
+					<div className="post-actions actions">
+						<Link to={`/${category}/${id}/edit`}><i className="fas fa-edit"></i></Link> | <button onClick={ () => this.props.onDeletePost(id) }><i className="fas fa-trash-alt"></i></button>
+					</div>
+				</div>
 
-				<CommentsList />
-				<CommentForm postId={id} onAddComment={this.addCommentToPost} />
+				<div className="comments-area">
+					<div className="l-center">
+						<CommentsList />
+						<CommentForm postId={id} onAddComment={this.addCommentToPost} />
+					</div>
+				</div>
 			</div>
 		);
 	}
