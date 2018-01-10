@@ -33,7 +33,7 @@ class PostDetail extends Component {
 							<div className="votes">{voteScore}</div>
 							<button onClick={ () => this.props.onVoteDown(id) }><i className="fas fa-angle-down"></i></button>
 						</div>
-						<div className="post-content">{body}</div>
+						<pre className="post-content">{body}</pre>
 					</div>
 					<div className="post-actions actions">
 						<Link to={`/${category}/${id}/edit`}><i className="fas fa-edit"></i></Link> | <button onClick={ () => this.props.onDeletePost(id) }><i className="fas fa-trash-alt"></i></button>

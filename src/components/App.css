@@ -137,6 +137,9 @@ input, textarea, select {
 }
 .post-content {
   padding-left: 20px;
+  white-space: pre-wrap;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.4;
 }
 .post-actions {
   text-align: right;
