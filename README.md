@@ -1,4 +1,4 @@
-#Readable Project
+# Readable Project
 
 This is the final assesment for Udacity's React-Redux course.
 
