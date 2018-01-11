@@ -6,10 +6,11 @@ import CommentItem from './CommentItem';
 class CommentsList extends Component {
 	render() {
 		const { comments } = this.props;
-		const noComments = Object.keys(comments).length === 0 ? <NoComments /> : null;
+		const commentsIds = Object.keys(comments);
+		const noComments = commentsIds.length === 0 ? <NoComments /> : null;
 		return (
 			<div>
-				<h2 className="section-title">Comments</h2>
+				<h2 className="section-title"><i className="far fa-comment"></i> {commentsIds.length === 1 ? '1 comment' : `${commentsIds.length} Comments`}</h2>
 				{noComments}
 				<ul className="comments-list">
 					{ Object.keys(comments).map( (commentId) => {
