@@ -1,9 +1,23 @@
+#Readable Project
+
+This is the final assesment for Udacity's React-Redux course.
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-Below you will find some information on how to perform common tasks.<br>
+## API Server
+
+This project depends on a backend development server built in Node provided by Udacity. You can download it [here](https://github.com/udacity/reactnd-project-readable-starter). Make sure it is running before you start this project.
+
+To install and start the API server, run the following commands in the API server directory:
+
+* `npm install`
+* `node server`
+
+If you have trouble getting it running make sure the port 3001 is available in your localhost.
+
+Detailed information about the API server and how to use it can be found [here](https://github.com/udacity/reactnd-project-readable-starter/blob/master/api-server/README.md)
 
 ## Folder Structure
-
 
 ```
 readable/
@@ -96,4 +110,11 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Contributing
+
+This repository is my own version of the final assessment project for Udacity's React-Redux course. After reviewed it will be no longer be maintained. Therefore, I most likely will not accept pull requests.
+
+## License
+
+The content of this repository is licensed under a Creative Commons Attribution License.
 
