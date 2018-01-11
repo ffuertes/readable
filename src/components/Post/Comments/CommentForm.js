@@ -40,7 +40,7 @@ class CommentForm extends Component {
 						<textarea name="body" id="body" cols="30" rows="10" value={body} onChange={this.onChange}></textarea>
 					</div>
 					<div className="form-field submit">
-						<button type="submit" class="button primary">Comment</button>
+						<button type="submit" className="button primary">Comment</button>
 					</div>
 				</form>
 			</div>

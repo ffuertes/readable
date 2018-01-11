@@ -73,7 +73,7 @@ class EditPost extends Component {
 					</div>
 
 					<div className="form-field submit">
-						<button type="submit" class="button primary">Update Post</button>
+						<button type="submit" className="button primary">Update Post</button>
 					</div>
 				</form>
 			</div>

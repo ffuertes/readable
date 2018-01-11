@@ -15,7 +15,7 @@ class Category extends Component {
 		}, {});
 
 		return (
-			<div class="l-center">
+			<div className="l-center">
 				<h1 className="page-title"><small>Category:</small> {catId}</h1>
 				<PostList posts={postsByCategory} />
 			</div>

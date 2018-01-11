@@ -19,7 +19,7 @@ class PostItem extends Component {
 						<div className="post-item__meta">Posted { moment(post.timestamp).fromNow() } by {post.author} | <i className="fas fa-comment"></i> {post.commentCount}</div>
 					</h2>
 					<footer className="actions">
-						<Link to={`/${post.category}/${post.id}/edit`}><i className="fas fa-edit"></i></Link> | <button onClick={ () => this.props.onDeletePost(post.id) }><i className="fas fa-trash-alt"></i></button>
+						<Link to={`/${post.category}/${post.id}/edit`}><i className="fas fa-edit"></i></Link> | <button onClick={ () => onDeletePost(post.id) }><i className="fas fa-trash-alt"></i></button>
 					</footer>
 				</div>
 				<div className="post-item__votes votes">

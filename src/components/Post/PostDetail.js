@@ -24,7 +24,7 @@ class PostDetail extends Component {
 		return (
 			<div>
 				<div className="l-center">
-				<h1 class="page-title">{title}</h1>
+				<h1 className="page-title">{title}</h1>
 					<div>Posted on { moment(timestamp).format('MMMM Do YYYY') } by {author} </div>
 
 					<div className="post-body">

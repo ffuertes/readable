@@ -20,7 +20,7 @@ class CommentItem extends Component {
 		const comment = comments[commentId];
 		const {edit} = this.state;
 		return (
-			<li class="comment-item">
+			<li className="comment-item">
 				{edit && <CommentEdit commentId={comment.id} body={comment.body} onEdit={this.onClickEdit} />}
 
 				{!edit &&
