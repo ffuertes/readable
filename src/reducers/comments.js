@@ -1,4 +1,4 @@
-import { RECEIVE_COMMENTS, ADD_COMMENT, DELETE_COMMENT, COMMENT_VOTE_UP, COMMENT_VOTE_DOWN, EDIT_COMMENT } from '../actions';
+import { RECEIVE_COMMENTS, ADD_COMMENT, DELETE_COMMENT, COMMENT_VOTE_UP, COMMENT_VOTE_DOWN, EDIT_COMMENT } from '../actions/types';
 
 function commentVote(state, action) {
     state[action.commentId].voteScore = action.voteScore;

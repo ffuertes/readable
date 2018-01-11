@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, ADD_POST, EDIT_POST, POST_VOTE_DOWN, POST_VOTE_UP, DELETE_POST, ADD_COMMENT, DELETE_COMMENT } from '../actions';
+import { RECEIVE_POSTS, ADD_POST, EDIT_POST, POST_VOTE_DOWN, POST_VOTE_UP, DELETE_POST, ADD_COMMENT, DELETE_COMMENT } from '../actions/types';
 
 function receivePosts(state, action) {
 	return action.posts.reduce( (byId, post) => {
